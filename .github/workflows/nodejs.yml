@@ -7,7 +7,6 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ${{ matrix.os }}
-    container: node:14.17-buster
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
 
     strategy:
