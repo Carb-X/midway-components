@@ -23,6 +23,7 @@ jobs:
           apt-get upgrade -qq --yes > /dev/null
           apt-get install -qq --yes --no-install-recommends bash git postgresql-client jq
           npm -v && node -v
+          apt-get install --yes software-properties-common
           add-apt-repository ppa:git-core/ppa
           apt-get update 
           apt-get install git
