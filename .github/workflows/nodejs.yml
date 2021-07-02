@@ -21,7 +21,7 @@ jobs:
           uname -a
           sudo apt-get update -qq --yes > /dev/null
           sudo apt-get upgrade -qq --yes > /dev/null
-          sudo apt-get install -qq --yes --no-install-recommends jq zstd
+          sudo apt-get install -qq --yes --no-install-recommends postgresql-client jq zstd
           npm -v && node -v
           git --version
           uname -a
@@ -58,8 +58,8 @@ jobs:
           CI: true
           # use `localhost` if running the job on the VM
           # use `postgres` if running the job on a container
-          POSTGRES_HOST: postgres
-          POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
           POSTGRES_DB: db_ci_test
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -69,7 +69,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:alpine
+        image: postgres
         ports:
           - 5432:5432
         env:
@@ -77,6 +77,10 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
         # needed because the postgres container does not provide a healthcheck
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
 
