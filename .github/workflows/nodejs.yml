@@ -15,6 +15,7 @@ jobs:
         os: [ubuntu-latest]
 
     steps:
+      - uses: actions/checkout@v2
       - name: Prepare
         run: |
           uname -a
@@ -30,7 +31,7 @@ jobs:
           uname -a
         env:
           APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE: 1
-      - uses: actions/checkout@v2
+
       - name: Use Node.js ${{ matrix.node }}
         uses: actions/setup-node@v2
         with:
