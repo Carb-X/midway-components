@@ -23,12 +23,8 @@ jobs:
           sudo apt-get upgrade -qq --yes > /dev/null
           sudo apt-get install -qq --yes --no-install-recommends bash postgresql-client jq
           npm -v && node -v
-          apt-get install -qq --yes software-properties-common
           git --version
           uname -a
-        env:
-          APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE: 1
-
       - name: Use Node.js ${{ matrix.node }}
         uses: actions/setup-node@v2
         with:
