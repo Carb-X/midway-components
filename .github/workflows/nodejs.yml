@@ -7,7 +7,6 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ${{ matrix.os }}
-    container: ubuntu
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
 
     strategy:
@@ -20,9 +19,9 @@ jobs:
       - name: Prepare
         run: |
           uname -a
-          apt-get update -qq --yes > /dev/null
-          apt-get upgrade -qq --yes > /dev/null
-          apt-get install -qq --yes --no-install-recommends bash postgresql-client jq zstd
+          sudo apt-get update -qq --yes > /dev/null
+          sudo apt-get upgrade -qq --yes > /dev/null
+          sudo apt-get install -qq --yes --no-install-recommends bash postgresql-client jq zstd
           npm -v && node -v
           git --version
           uname -a
@@ -59,7 +58,7 @@ jobs:
           CI: true
           # use `localhost` if running the job on the VM
           # use `postgres` if running the job on a container
-          POSTGRES_HOST: postgres
+          POSTGRES_HOST: '0.0.0.0'
           POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
           POSTGRES_DB: db_ci_test
           POSTGRES_USER: postgres
